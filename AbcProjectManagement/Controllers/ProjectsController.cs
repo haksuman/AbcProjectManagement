@@ -54,7 +54,7 @@ namespace AbcProjectManagement.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("Id,ProjectName,Status,Team")] ProjectsModel projectsModel)
+        public async Task<IActionResult> Create([Bind("Id,ProjectName,Status,Team,Progress")] ProjectsModel projectsModel)
         {
             if (ModelState.IsValid)
             {
@@ -86,7 +86,7 @@ namespace AbcProjectManagement.Controllers
         // more details, see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("Id,ProjectName,Status,Team")] ProjectsModel projectsModel)
+        public async Task<IActionResult> Edit(int id, [Bind("Id,ProjectName,Status,Team,Progress")] ProjectsModel projectsModel)
         {
             if (id != projectsModel.Id)
             {

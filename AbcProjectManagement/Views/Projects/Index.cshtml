@@ -3,13 +3,16 @@
 @{
     ViewData["Title"] = "Index";
 }
+<script src="~/lib/jquery/dist/jquery.min.js"></script>
+<link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css"/>
+
 
 <h1>Index</h1>
 
 <p>
-    <a asp-action="Create">Create New</a>
+    <a class="btn-primary p-2" asp-action="Create">Create New</a>
 </p>
-<table class="table">
+<table id="projects-table">
     <thead>
         <tr>
             <th>
@@ -20,6 +23,9 @@
             </th>
             <th>
                 @Html.DisplayNameFor(model => model.Team)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Progress)
             </th>
             <th></th>
         </tr>
@@ -37,11 +43,20 @@
                 @Html.DisplayFor(modelItem => item.Team)
             </td>
             <td>
-                <a asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
-                <a asp-action="Details" asp-route-id="@item.Id">Details</a> |
-                <a asp-action="Delete" asp-route-id="@item.Id">Delete</a>
+                @Html.DisplayFor(modelItem => item.Progress)
+            </td>
+            <td>
+                <a class="btn-info p-2" asp-action="Details" asp-route-id="@item.Id">Details</a> |
+                <a class="btn-warning p-2" asp-action="Edit" asp-route-id="@item.Id">Edit</a> |
+                <a class="btn-danger p-2" asp-action="Delete" asp-route-id="@item.Id">Delete</a>
             </td>
         </tr>
 }
     </tbody>
 </table>
+
+
+<script type="text/javascript" charset="utf8" src="https://cdn.datatables.net/1.12.1/js/jquery.dataTables.js"></script>
+
+<script src="~/js/projectsTable.js" asp-append-version="true"></script>
+
