@@ -7,7 +7,7 @@
 <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/1.12.1/css/jquery.dataTables.css" />
 
 <div class="container card shadow py-3 px-4" style="margin-top:2%">
-    <h1>Projects</h1>
+    <h1 class="mb-2">Projects</h1>
 
     <p>
         <a class="btn btn-primary mb-2" asp-action="Create">Create New</a>
@@ -15,19 +15,19 @@
     <table id="projects-table" class="table">
         <thead>
             <tr>
-                <th>
+                <th class="col-2">
                     @Html.DisplayNameFor(model => model.ProjectName)
                 </th>
-                <th>
+                <th class="col-1">
                     @Html.DisplayNameFor(model => model.Status)
                 </th>
-                <th>
+                <th class="col-4">
                     @Html.DisplayNameFor(model => model.Team)
                 </th>
-                <th>
+                <th class="col-2">
                     @Html.DisplayNameFor(model => model.Progress)
                 </th>
-                <th></th>
+                <th class="col-3"></th>
             </tr>
         </thead>
         <tbody>
@@ -43,7 +43,8 @@
                     @Html.DisplayFor(modelItem => item.Team)
                 </td>
                 <td>
-                    @Html.DisplayFor(modelItem => item.Progress)
+                    <progress value=@item.Progress max="1"></progress>  
+                    @*@Html.DisplayFor(modelItem => item.Progress)*@
                 </td>
                 <td>
                     <a class="btn btn-warning" asp-action="Edit" asp-route-id="@item.Id">Edit</a> 
