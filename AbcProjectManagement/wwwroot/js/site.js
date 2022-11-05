@@ -4,3 +4,7 @@
 // Write your JavaScript code.
 
 
+
+$(document).ready(function () {
+    $('#users-table').DataTable();
+});
