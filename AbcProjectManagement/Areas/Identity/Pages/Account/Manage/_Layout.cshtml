@@ -9,21 +9,24 @@
     }
 }
 
-<h2>Manage your account</h2>
+<div class="container card shadow py-3 px-4" style="margin-top:2%">
 
-<div>
-    <h4>Change your account settings</h4>
-    <hr />
-    <div class="row">
-        <div class="col-md-3">
-            <partial name="_ManageNav" />
-        </div>
-        <div class="col-md-9">
-            @RenderBody()
+    <h2>Manage your account</h2>
+
+    <div>
+        <h4>Change your account settings</h4>
+        <hr />
+        <div class="row">
+            <div class="col-md-3">
+                <partial name="_ManageNav" />
+            </div>
+            <div class="col-md-9">
+                @RenderBody()
+            </div>
         </div>
     </div>
-</div>
 
-@section Scripts {
-    @RenderSection("Scripts", required: false)
-}
+    @section Scripts {
+        @RenderSection("Scripts", required: false)
+    }
+</div>
