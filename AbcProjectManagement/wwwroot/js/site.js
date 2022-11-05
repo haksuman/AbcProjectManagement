@@ -8,3 +8,7 @@
 $(document).ready(function () {
     $('#users-table').DataTable();
 });
+
+$(document).ready(function () {
+    $('#projects-table').DataTable();
+});

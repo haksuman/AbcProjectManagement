@@ -1,4 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
+﻿using Microsoft.AspNet.Identity;
+using Microsoft.EntityFrameworkCore.Metadata.Internal;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -6,6 +8,7 @@ namespace AbcProjectManagement.Models
 {
     public class ProjectsModel
     {
+
         public int Id { get; set; }
         public string ProjectName { get; set; }
         public string Status { get; set; }

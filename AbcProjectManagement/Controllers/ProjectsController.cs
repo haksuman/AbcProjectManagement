@@ -7,16 +7,21 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore;
 using AbcProjectManagement.Data;
 using AbcProjectManagement.Models;
+using Microsoft.AspNetCore.Identity;
+using System.Data;
+using IdentityResult = Microsoft.AspNetCore.Identity.IdentityResult;
 
 namespace AbcProjectManagement.Controllers
 {
     public class ProjectsController : Controller
     {
         private readonly ApplicationDbContext _context;
+        public readonly UserManager<IdentityUser> userManager;
 
-        public ProjectsController(ApplicationDbContext context)
+        public ProjectsController(ApplicationDbContext context, UserManager<IdentityUser> userManager)
         {
             _context = context;
+            this.userManager = userManager;
         }
 
         // GET: Projects
@@ -149,5 +154,121 @@ namespace AbcProjectManagement.Controllers
         {
             return _context.ProjectModel.Any(e => e.Id == id);
         }
+
+        [HttpGet]
+        public async Task<IActionResult> EditProjectTeam(int id)
+        {
+            ViewBag.Id = id;
+            var projectsModel = await _context.ProjectModel.FindAsync(id);
+
+            if (projectsModel == null)
+            {
+                ViewBag.ErrorMessage = $"Project with Id = {id} cannot be found";
+                return View("NotFound");
+            }
+            
+            var model = new List<EditProjectTeamViewModel>();
+            foreach (var user in userManager.Users)
+            {
+                var EditProjectTeamViewModel = new EditProjectTeamViewModel
+                {
+                    UserId = user.Id,
+                    UserName = user.UserName
+                };
+
+                if (projectsModel.Team == null)
+                {
+                    EditProjectTeamViewModel.IsSelected = false;
+                } else if (projectsModel.Team.Contains(user.UserName))
+                {
+                    EditProjectTeamViewModel.IsSelected = true;
+                }
+                else
+                {
+                    EditProjectTeamViewModel.IsSelected = false;
+                }
+
+                model.Add(EditProjectTeamViewModel);
+            }
+            return View(model);
+            }
+
+
+
+        [HttpPost]
+        public async Task<IActionResult> EditProjectTeam(List<EditProjectTeamViewModel> model, int id)
+        {
+            var projectsModel = await _context.ProjectModel.FindAsync(id);
+
+            if (projectsModel == null)
+            {
+                ViewBag.ErrorMessage = $"Role with Id = {id} cannot be found";
+                return View("NotFound");
+            }
+
+            string result = null;
+            for (int i = 0; i < model.Count; i++)
+            {
+                var user = await userManager.FindByIdAsync(model[i].UserId);
+
+                //result = null;
+
+                if (model[i].IsSelected)
+                {
+                    result = result + model[i].UserName + "; ";
+                }
+                else
+                {
+                    continue;
+                }
+
+            }
+            projectsModel.Team = result;
+            _context.Update(projectsModel);
+            await _context.SaveChangesAsync();
+
+
+            //IdentityResult result = null;
+
+            //if (model[i].IsSelected && !await _context.ProjectModel.ContainsAsync(user.UserName))
+            //{
+            //    result = await userManager.AddToRoleAsync(user, role.Name);
+            //}
+            //else if (!model[i].IsSelected && await userManager.IsInRoleAsync(user, role.Name))
+            //{
+            //    result = await userManager.RemoveFromRoleAsync(user, role.Name);
+            //}
+            //else
+            //{
+            //    continue;
+            //}
+
+            //if (result.Succeeded)
+            //{
+            //    if (i < (model.Count - 1))
+            //        continue;
+            //    else
+            //        return RedirectToAction("Edit", new { Id = roleId });
+            //}
+
+
+            return RedirectToAction("Edit", new { Id = id });
+        }
+
     }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 }
+

@@ -24,9 +24,12 @@
                 <span asp-validation-for="Status" class="text-danger"></span>
             </div>
             <div class="form-group">
-                <label asp-for="Team" class="control-label"></label>
-                <input asp-for="Team" class="form-control" />
-                <span asp-validation-for="Team" class="text-danger"></span>
+                <label asp-for="Team" class="control-label"></label> <br/>
+                <input type="hidden" asp-for="Team" class="form-control" />
+                @*<span asp-validation-for="Team" class="text-danger"></span>*@
+                @*<a asp-action="EditUsersInRole" asp-controller="Administration" asp-route-roleId="@Model.Id" class="btn btn-primary" style="width:auto">Add or Remove Users</a>*@
+                <a asp-action="EditProjectTeam" asp-controller="Projects" asp-route-id="@Model.Id" class="btn btn-warning" style="width:auto">Edit Project Team</a>
+
             </div>
             <div class="form-group">
                 <label asp-for="Progress" class="control-label"></label>
